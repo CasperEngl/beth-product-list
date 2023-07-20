@@ -123,7 +123,7 @@ function NewProductForm() {
 function BuiltWith() {
   return (
     <div>
-      <h2 class="text-lg text-gray-500 font-medium">Built with</h2>
+      <h2 class="text-xl font-semibold text-gray-700">Built with</h2>
 
       <ul class="space-y-4 mt-4 list-outside text-gray-500 max-w-xs">
         <li>
@@ -287,7 +287,7 @@ function Layout(props: elements.Children) {
         <meta charset="utf-8" />
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
         <meta name="viewport" content="width=device-width" />
-        <title>BETH Product List</title>
+        <title>BETH Stack Product List</title>
 
         <script
           src="https://unpkg.com/htmx.org@1.9.2"
@@ -315,7 +315,14 @@ new Elysia()
         <body class="min-h-screen py-12 px-6 grid place-items-center bg-gray-50">
           <div class="space-y-8 w-full max-w-2xl">
             <div>
-              <h1 class="text-2xl font-bold">BETH Product List</h1>
+              <h1 class="text-2xl font-bold">BETH Stack Product List</h1>
+
+              <p class="text-gray-500 text-xs font-light max-w-[65ch]">
+                (B)un + (E)lysia + (T)urso + (H)TMX = BETH Stack. A simple
+                product list with a form to add new products. The form is
+                submitted via HTMX and the new product is added to the list
+                without a page reload.
+              </p>
 
               <a
                 href="https://github.com/CasperEngl/astro-htmx/"
