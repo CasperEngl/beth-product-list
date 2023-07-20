@@ -1,4 +1,4 @@
-import { html } from "@elysiajs/html";
+import { html as elysiaHtml } from "@elysiajs/html";
 import { clsx } from "clsx";
 import { Elysia, t } from "elysia";
 import * as elements from "typed-html";
@@ -47,9 +47,8 @@ function NewProductForm() {
       hx-swap="outerHTML"
       hx-target="#product-list"
       hx-indicator="#new-product-indicator"
-      class="grid gap-y-6 grid-cols-1 group"
-      x-data="{ name: null, price: null, submitting: false, error: null }"
-      onsubmit="this.reset()"
+      class="max-w-xs grid gap-y-6 grid-cols-1"
+      _="on submit target.reset()"
     >
       <label class="grid gap-1">
         <div>Name</div>
@@ -98,7 +97,6 @@ function NewProductForm() {
           class="hidden htmx-request:block"
           role="status"
         >
-          {/* @ts-expect-error */}
           <svg
             aria-hidden="true"
             class="w-5 h-5 mr-2 animate-spin fill-blue-500"
@@ -106,17 +104,14 @@ function NewProductForm() {
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
           >
-            {/* @ts-expect-error */}
             <path
               d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
               fill="currentColor"
             />
-            {/* @ts-expect-error */}
             <path
               d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
               fill="currentFill"
             />
-            {/* @ts-expect-error */}
           </svg>
           <span class="sr-only">Loading...</span>
         </div>
@@ -134,78 +129,170 @@ function BuiltWith() {
     <div>
       <h2 class="text-lg text-gray-500 font-medium">Built with</h2>
 
-      <ul class="list-disc pl-4 space-y-1 mt-4 list-outside text-gray-500">
+      <ul class="space-y-4 mt-4 list-outside text-gray-500 max-w-xs">
         <li>
           {/* <!-- Astro --> */}
-          <a href="https://astro.build/">https://astro.build/</a>
-          <p class="text-gray-500 max-w-xs text-xs font-light">
-            Used to hold everything together.
-          </p>
-          <p class="text-gray-500 max-w-xs text-xs font-light">
-            Bonus: Lets me deploy anywhere 🚀
-          </p>
-          <p class="text-gray-500 max-w-xs text-xs font-light">
-            Current: ▲ Vercel
-          </p>
+          <details>
+            <summary>
+              <a
+                href="https://astro.build/"
+                class="text-blue-500 visited:text-purple-500 underline"
+              >
+                https://astro.build/
+              </a>
+            </summary>
+
+            <p class="text-xs font-light">Used to hold everything together.</p>
+
+            <p class="text-xs font-light">Bonus: Lets me deploy anywhere 🚀</p>
+
+            <p class="text-xs font-light">Current: ▲ Vercel</p>
+          </details>
         </li>
+
         <li>
           {/* <!-- SolidJS --> */}
-          <a href="https://solidjs.com/">https://solidjs.com/</a>
-          <p class="text-gray-500 max-w-xs text-xs font-light">
-            Used to render the product list in SSR and render it in the response
-            from /api/new-product.
-          </p>
+          <details>
+            <summary>
+              <a
+                href="https://solidjs.com/"
+                class="text-blue-500 visited:text-purple-500 underline"
+              >
+                https://solidjs.com/
+              </a>
+            </summary>
+
+            <p class="text-xs font-light">
+              Used to render the product list in SSR and render it in the
+              response from /api/new-product.
+            </p>
+          </details>
         </li>
+
         <li>
           {/* <!-- HTMX --> */}
-          <a href="https://htmx.org/">https://htmx.org/</a>
-          <p class="text-gray-500 max-w-xs text-xs font-light">
-            Used to handle the form submission HTTP. ⚡️
-          </p>
+          <details>
+            <summary>
+              <a
+                href="https://htmx.org/"
+                class="text-blue-500 visited:text-purple-500 underline"
+              >
+                https://htmx.org/
+              </a>
+            </summary>
+
+            <p class="text-xs font-light">
+              Used to handle the form submission HTTP. ⚡️
+            </p>
+          </details>
         </li>
+
         <li>
           {/* <!-- AlpineJS --> */}
-          <a href="https://alpinejs.dev/">https://alpinejs.dev/</a>
-          <p class="text-gray-500 max-w-xs text-xs font-light">
-            Used to handle the form submission validation. 🔮✨
-          </p>
+          <details>
+            <summary>
+              <a
+                href="https://alpinejs.dev/"
+                class="text-blue-500 visited:text-purple-500 underline"
+              >
+                https://alpinejs.dev/
+              </a>
+            </summary>
+
+            <p class="text-xs font-light">
+              Used to handle the form submission validation. 🔮✨
+            </p>
+          </details>
         </li>
+
         <li>
           {/* <!-- TailwindCSS --> */}
-          <a href="https://tailwindcss.com/">https://tailwindcss.com/</a>
-          <p class="text-gray-500 max-w-xs text-xs font-light">
-            Used to style the page.
-          </p>
+          <details>
+            <summary>
+              <a
+                href="https://tailwindcss.com/"
+                class="text-blue-500 visited:text-purple-500 underline"
+              >
+                https://tailwindcss.com/
+              </a>
+            </summary>
+
+            <p class="text-xs font-light">Used to style the page.</p>
+          </details>
         </li>
+
         <li>
           {/* <!-- PlanetScale --> */}
-          <a href="https://planetscale.com/">https://planetscale.com/</a>
-          <p class="text-gray-500 max-w-xs text-xs font-light">
-            MySQL compatible Edge™ DBaaS. Used to store the products.
-          </p>
+          <details>
+            <summary>
+              <a
+                href="https://turso.tech/"
+                class="text-blue-500 visited:text-purple-500 underline"
+              >
+                https://turso.tech/
+              </a>
+            </summary>
+
+            <p class="text-xs font-light">
+              SQLite Edge™ DBaaS. Used to store the products.
+            </p>
+          </details>
         </li>
+
         <li>
           {/* <!-- Drizzle ORM/Kit --> */}
-          <a href="https://drizzle.team/">https://drizzle.team/</a>
-          <p class="text-gray-500 max-w-xs text-xs font-light">
-            "Professional developers" creating an ORM as well as a DBMS Kit. Yet
-            TBD. whether it's a good idea to use it in production. 🤷‍♂️
-          </p>
+          <details>
+            <summary>
+              <a
+                href="https://drizzle.team/"
+                class="text-blue-500 visited:text-purple-500 underline"
+              >
+                https://drizzle.team/
+              </a>
+            </summary>
+
+            <p class="text-xs font-light">
+              "Professional developers" creating an ORM as well as a DBMS Kit.
+              Yet TBD. whether it's a good idea to use it in production. 🤷‍♂️
+            </p>
+          </details>
         </li>
+
         <li>
           {/* <!-- Resend --> */}
-          <a href="https://resend.com/">https://resend.com/</a>
-          <p class="text-gray-500 max-w-xs text-xs font-light">
-            I receive an email when a new product has been added. Keeping an eye
-            on you 👀
-          </p>
+          <details>
+            <summary>
+              <a
+                href="https://resend.com/"
+                class="text-blue-500 visited:text-purple-500 underline"
+              >
+                https://resend.com/
+              </a>
+            </summary>
+
+            <p class="text-xs font-light">
+              I receive an email when a new product has been added. Keeping an
+              eye on you 👀
+            </p>
+          </details>
         </li>
+
         <li>
           {/* <!-- React Email --> */}
-          <a href="https://react.email/">https://react.email/</a>
-          <p class="text-gray-500 max-w-xs text-xs font-light">
-            Used to create the email template being sent to me
-          </p>
+          <details>
+            <summary>
+              <a
+                href="https://react.email/"
+                class="text-blue-500 visited:text-purple-500 underline"
+              >
+                https://react.email/
+              </a>
+            </summary>
+
+            <p class="text-xs font-light">
+              Used to create the email template being sent to me
+            </p>
+          </details>
         </li>
       </ul>
     </div>
@@ -213,35 +300,39 @@ function BuiltWith() {
 }
 
 function Layout(props: elements.Children) {
-  return `<html lang="en">
+  return (
+    <html lang="en">
       <head>
         <meta charset="utf-8" />
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
         <meta name="viewport" content="width=device-width" />
-        <title>Astro HTMX</title>
+        <title>BETH Product List</title>
 
         <script
           src="https://unpkg.com/htmx.org@1.9.2"
           integrity="sha384-L6OqL9pRWyyFU3+/bjdSri+iIphTN/bvYyM37tICVyOJkWZLpP2vGn6VUEXgzg6h"
           crossorigin="anonymous"
         ></script>
+        <script src="https://unpkg.com/hyperscript.org@0.9.9"></script>
 
-        <script src="//unpkg.com/alpinejs" defer=""></script>
+        <link rel="stylesheet" href="/style.css" />
       </head>
 
-      ${props.children}
-    </html>`;
+      {props.children}
+    </html>
+  );
 }
 
 new Elysia()
-  .use(html())
+  .use(elysiaHtml())
+  .get("/style.css", () => Bun.file("./dist/style.css"))
   .get("/", async ({ html }) => {
     const products = await getLatestProducts();
 
     return html(
       <Layout>
-        <body class="min-h-screen grid place-items-center bg-gray-50">
-          <div class="space-y-8">
+        <body class="min-h-screen py-12 px-6 grid place-items-center bg-gray-50">
+          <div class="space-y-8 w-full max-w-2xl">
             <div>
               <h1 class="text-2xl font-bold">Astro HTMX</h1>
 
