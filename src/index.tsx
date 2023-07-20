@@ -116,10 +116,6 @@ function NewProductForm() {
           <span class="sr-only">Loading...</span>
         </div>
       </button>
-
-      <div class="text-red-500" x-show="error">
-        <span x-text="error"></span>
-      </div>
     </form>
   );
 }
@@ -131,46 +127,49 @@ function BuiltWith() {
 
       <ul class="space-y-4 mt-4 list-outside text-gray-500 max-w-xs">
         <li>
-          {/* <!-- Astro --> */}
+          {/* Bun */}
           <details>
             <summary>
               <a
-                href="https://astro.build/"
+                href="https://bun.sh/"
                 class="text-blue-500 visited:text-purple-500 underline"
               >
-                https://astro.build/
+                https://bun.sh/
               </a>
             </summary>
-
-            <p class="text-xs font-light">Used to hold everything together.</p>
-
-            <p class="text-xs font-light">Bonus: Lets me deploy anywhere 🚀</p>
-
-            <p class="text-xs font-light">Current: ▲ Vercel</p>
           </details>
         </li>
 
         <li>
-          {/* <!-- SolidJS --> */}
+          {/* Elysia */}
           <details>
             <summary>
               <a
-                href="https://solidjs.com/"
+                href="https://elysiajs.com/"
                 class="text-blue-500 visited:text-purple-500 underline"
               >
-                https://solidjs.com/
+                https://elysiajs.com/
               </a>
             </summary>
-
-            <p class="text-xs font-light">
-              Used to render the product list in SSR and render it in the
-              response from /api/new-product.
-            </p>
           </details>
         </li>
 
         <li>
-          {/* <!-- HTMX --> */}
+          {/* Turso */}
+          <details>
+            <summary>
+              <a
+                href="https://turso.tech/"
+                class="text-blue-500 visited:text-purple-500 underline"
+              >
+                https://turso.tech/
+              </a>
+            </summary>
+          </details>
+        </li>
+
+        <li>
+          {/* HTMX */}
           <details>
             <summary>
               <a
@@ -188,25 +187,25 @@ function BuiltWith() {
         </li>
 
         <li>
-          {/* <!-- AlpineJS --> */}
+          {/* HyperScript */}
           <details>
             <summary>
               <a
-                href="https://alpinejs.dev/"
+                href="https://hyperscript.org/"
                 class="text-blue-500 visited:text-purple-500 underline"
               >
-                https://alpinejs.dev/
+                https://hyperscript.org/
               </a>
             </summary>
 
             <p class="text-xs font-light">
-              Used to handle the form submission validation. 🔮✨
+              Used to handle the form submission HTTP. ⚡️
             </p>
           </details>
         </li>
 
         <li>
-          {/* <!-- TailwindCSS --> */}
+          {/* TailwindCSS */}
           <details>
             <summary>
               <a
@@ -222,25 +221,7 @@ function BuiltWith() {
         </li>
 
         <li>
-          {/* <!-- PlanetScale --> */}
-          <details>
-            <summary>
-              <a
-                href="https://turso.tech/"
-                class="text-blue-500 visited:text-purple-500 underline"
-              >
-                https://turso.tech/
-              </a>
-            </summary>
-
-            <p class="text-xs font-light">
-              SQLite Edge™ DBaaS. Used to store the products.
-            </p>
-          </details>
-        </li>
-
-        <li>
-          {/* <!-- Drizzle ORM/Kit --> */}
+          {/* Drizzle ORM/Kit */}
           <details>
             <summary>
               <a
@@ -253,13 +234,13 @@ function BuiltWith() {
 
             <p class="text-xs font-light">
               "Professional developers" creating an ORM as well as a DBMS Kit.
-              Yet TBD. whether it's a good idea to use it in production. 🤷‍♂️
+              Yet TBD whether it's a good idea to use it in production. 🤷‍♂️
             </p>
           </details>
         </li>
 
         <li>
-          {/* <!-- Resend --> */}
+          {/* Resend */}
           <details>
             <summary>
               <a
@@ -278,7 +259,7 @@ function BuiltWith() {
         </li>
 
         <li>
-          {/* <!-- React Email --> */}
+          {/* React Email */}
           <details>
             <summary>
               <a
@@ -334,7 +315,7 @@ new Elysia()
         <body class="min-h-screen py-12 px-6 grid place-items-center bg-gray-50">
           <div class="space-y-8 w-full max-w-2xl">
             <div>
-              <h1 class="text-2xl font-bold">Astro HTMX</h1>
+              <h1 class="text-2xl font-bold">BETH Product List</h1>
 
               <a
                 href="https://github.com/CasperEngl/astro-htmx/"
@@ -360,26 +341,26 @@ new Elysia()
   })
   .post(
     "/api/new-product",
-    async ({ html, params }) => {
-      invariant(params.name, "Missing name");
-      invariant(params.price, "Missing price");
+    async ({ html, body }) => {
+      invariant(body.name, "Missing name");
+      invariant(body.price, "Missing price");
 
       await db
         .insert(productsSchema)
         .values({
-          name: params.name,
-          price: params.price,
+          name: body.name,
+          price: Number(body.price),
         })
         .run();
 
       const products = await getLatestProducts();
 
-      html(<ProductList products={products} />);
+      return html(<ProductList products={products} />);
     },
     {
-      params: t.Object({
+      body: t.Object({
         name: t.String(),
-        price: t.Number(),
+        price: t.String(),
       }),
     },
   )
